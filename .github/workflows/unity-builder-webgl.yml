@@ -67,7 +67,9 @@ jobs:
         with:
           targetPlatform: WebGL
           unityVersion: 2022.3.22f1
-      - uses: upload-pages-artifact@v3.0.1
+
+      # Upload Artifact
+      - uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: build/WebGL/WebGL
 
