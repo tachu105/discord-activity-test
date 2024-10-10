@@ -49,11 +49,6 @@ jobs:
         id: vars
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      # Compression FormatをDisabledに変更
-      - name: Set CompressionFormat to Disabled
-        run: |
-          sed -i -e 's/webGLCompressionFormat: ./webGLCompressionFormat: 2/' ProjectSettings/ProjectSettings.asset
-
       # Cache
       - uses: actions/cache@v4.1.1
         with:
