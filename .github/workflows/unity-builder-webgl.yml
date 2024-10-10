@@ -26,11 +26,6 @@ jobs:
       - name: Check out my unity project.
         uses: actions/checkout@v4.2.1
 
-      # Compression FormatをDisabledに変更
-      - name: Set CompressionFormat to Disabled
-        run: |
-          sed -i -e 's/webGLCompressionFormat: ./webGLCompressionFormat: 2/' ProjectSettings/ProjectSettings.asset
-
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
@@ -61,6 +56,11 @@ jobs:
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
           restore-keys: |
             Library-
+
+      # Compression FormatをDisabledに変更
+      - name: Set CompressionFormat to Disabled
+        run: |
+          sed -i -e 's/webGLCompressionFormat: ./webGLCompressionFormat: 2/' ProjectSettings/ProjectSettings.asset
 
       # Unityプロジェクトのビルド
       # 設定しない場合、buildフォルダに出力される
