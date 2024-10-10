@@ -12,6 +12,10 @@ on:
     - Packages/**
     - ProjectSettings/**
   workflow_dispatch: {}
+# 先行ジョブがあればキャンセル
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -63,3 +67,22 @@ jobs:
         with:
           targetPlatform: WebGL
           unityVersion: 2022.3.22f1
+      - name: Upload Artifact
+        uses: upload-pages-artifact@v3.0.1
+        with:
+          path: build/WebGL/WebGL
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      pages: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5
