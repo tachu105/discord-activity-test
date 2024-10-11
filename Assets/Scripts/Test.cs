@@ -17,6 +17,9 @@ public sealed class Test : MonoBehaviour
         ChangeURL("/test");
 
         yield return wait;
+        ChangeURL("");
+
+        yield return wait;
         ChangeURL("/test2");
 
         yield return wait;
