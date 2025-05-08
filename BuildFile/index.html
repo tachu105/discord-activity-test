@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>My Unity WebGL Game</title>
+  <!-- Discord Activity SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@discord/activity@latest/dist/activity.iife.js"></script>
+</head>
+<body>
+  <canvas id="unity-canvas"></canvas>
+  <script src="Build/UnityLoader.js"></script>
+  <script>
+    // Discord Activity の初期化
+    const client = new Discord.Activity.Client({ client_id: '1347106717011415061' });
+    client.on('ready', () => {
+      client.createActivity({
+        details: 'WebGLデバッグ',
+        state: 'クリックして遊ぶだけ',
+        assets: {
+          large_image: '8195-v7',
+          large_text: 'My Unity Game'
+        }
+      });
+    });
+
+    // Unity WebGL 起動
+    createUnityInstance(
+      document.querySelector("#unity-canvas"),
+      {
+        dataUrl: "Build/BuildFile.data",
+        frameworkUrl: "Build/BuildFile.framework.js",
+        codeUrl: "Build/BuildFile.wasm",
+      }
+    );
+  </script>
+</body>
+</html>
